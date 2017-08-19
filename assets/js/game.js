@@ -61,12 +61,14 @@ function gameRun(myShip, enemyShip)
         //Load Arena State
         $(".fleet").empty();
         $(".game").append("<div class='arena'><div class='row'><h2>Arena: </h2></div><div class='row shipsArena'></div></div>");
+        $(".game").prepend("<div class='row gameUI'><div class='col-lg-4'><div class='stats-"+myShip.id+"'></div></div><div class='col-lg-4'><h1>Pirate Battle</h1></div><div class='col-lg-4'><div class='stats-"+enemyShip.id+"'></div></div></div>");
 
         //Load ships into state
-        var characters = [myShip, enemyShip];
-        for(i = 0; i < characters.length; i++)
+        var fleet = [myShip, enemyShip];
+        for(s = 0; s < fleet.length; s++)
         {
-            $(".shipsArena").append("<div class='col-lg-4 ship' id='ship"+characters[i].id+"'><p class='ship-name'>"+characters[i].name+"</p><img class='ship-img' src='"+characters[i].sprites[99]+"'/><p class='ship-health'>"+characters[i].health+"</p></div>");
+            $(".shipsArena").append("<div class='col-lg-4 ship' id='ship"+fleet[s].id+"'><p class='ship-name'>"+fleet[s].name+"</p><img class='ship-img' src='"+fleet[s].sprites[99]+"'/><p class='ship-health'>"+fleet[s].health+"</p></div>");
+            $(".stats-"+fleet[s].id).append("<p>Name: " + fleet[s].name + "</p>");
         }
     }
 
