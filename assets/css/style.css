@@ -1,0 +1,5 @@
+/* Ship Styles */
+.selected
+{
+    border: solid 1px green;
+}

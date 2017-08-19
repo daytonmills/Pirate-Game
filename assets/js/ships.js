@@ -8,7 +8,7 @@ var ships = {
     "ship1": {
         id: 1,
         name: "Pirate Ship",
-        enemy: false,
+        selected: false,
         health: 180,
         attack: 10,
         counter: 10,
@@ -22,7 +22,7 @@ var ships = {
     "ship2": {
         id: 2,
         name: "Red Ship",
-        enemy: false,
+        selected: false,
         health: 150,
         attack: 10,
         counter: 10,
@@ -36,7 +36,7 @@ var ships = {
     "ship3": {
         id: 3,
         name: "Green Ship",
-        enemy: false,
+        selected: false,
         health: 120,
         attack: 10,
         counter: 10,
@@ -50,7 +50,7 @@ var ships = {
     "ship4": {
         id: 4,
         name: "Blue Ship",
-        enemy: false,
+        selected: false,
         health: 100,
         attack: 10,
         counter: 10,
