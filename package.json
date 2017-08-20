@@ -1,0 +1,31 @@
+{
+  "name": "simple-rpg",
+  "version": "1.0.0",
+  "description": "A simple game",
+  "main": "index.html",
+  "dependencies": {
+    "eslint-plugin-jquery": "^1.2.1",
+    "eslint": "^4.5.0"
+  },
+  "devDependencies": {
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jquery": "^1.2.1",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daytonmills/Simple-RPG.git"
+  },
+  "author": "@DaytonMills",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daytonmills/Simple-RPG/issues"
+  },
+  "homepage": "https://github.com/daytonmills/Simple-RPG#readme"
+}
