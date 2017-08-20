@@ -8,3 +8,9 @@
 {
     border: solid 1px red;
 }
+
+.eventLog
+{
+    height: 50px;
+    overflow-y:scroll;
+}

@@ -53,7 +53,8 @@ function gameInit()
 
 function gameRun(myShip, enemyShip)
 {
-
+    var fleet = [myShip, enemyShip];
+    var events = [];
     setBattlefield();
 
     function setBattlefield()
@@ -61,17 +62,54 @@ function gameRun(myShip, enemyShip)
         //Load Arena State
         $(".fleet").empty();
         $(".game").append("<div class='arena'><div class='row'><h2>Arena: </h2></div><div class='row shipsArena'></div></div>");
-        $(".game").prepend("<div class='row gameUI'><div class='col-lg-4'><div class='stats-"+myShip.id+"'></div></div><div class='col-lg-4'><h1>Pirate Battle</h1></div><div class='col-lg-4'><div class='stats-"+enemyShip.id+"'></div></div></div>");
+        $(".game").prepend("<div class='gameUI'><div class='row'><div class='col-lg-4'><div class='stats-"+myShip.id+"'></div></div><div class='col-lg-4'><h1>Pirate Battle</h1></div><div class='col-lg-4'><div class='stats-"+enemyShip.id+"'></div></div></div><div class='row'><div class='col-lg-4'><button class='btn btn-sm btn-outline-danger' id='attack'>Attack</button></div><div class='col-lg-8'><div class='eventLog'></div></div></div></div>");
 
         //Load ships into state
-        var fleet = [myShip, enemyShip];
         for(s = 0; s < fleet.length; s++)
         {
             $(".shipsArena").append("<div class='col-lg-4 ship' id='ship"+fleet[s].id+"'><p class='ship-name'>"+fleet[s].name+"</p><img class='ship-img' src='"+fleet[s].sprites[99]+"'/><p class='ship-health'>"+fleet[s].health+"</p></div>");
-            $(".stats-"+fleet[s].id).append("<p>Name: " + fleet[s].name + "</p>");
+        }
+
+        updateUI();
+    }
+
+    function eventLog(events)
+    {
+        for(e = 0; e < events.length; e++)
+        {
+            $(".eventLog").prepend("<p>"+events[e]+"</p>");
         }
     }
 
-    console.log("Your ship: " + myShip.name);
-    console.log("Enemy ship: " + enemyShip.name);
+    function updateUI()
+    {
+        for(s = 0; s < fleet.length; s++)
+        {
+            $(".stats-"+fleet[s].id).html("<p>Name: " + fleet[s].name + "</p><p>Health: " + fleet[s].health + "</p>");
+            $("#ship"+fleet[s].id+" > .ship-health").html(fleet[s].health);
+        }
+    }
+
+    //Attacking
+    $("#attack").click(function(event) {
+        attack();
+        counter();
+
+        function attack()
+        {
+            enemyShip.health -= myShip.attack;
+            events = [];
+            events.push(myShip.name + " attacked " + enemyShip.name + " for " + myShip.attack + " damage!");
+            eventLog(events);
+        }
+
+        function counter()
+        {
+            myShip.health -= enemyShip.counter;
+            events = [];
+            events.push(enemyShip.name + " counter-attacked " + myShip.name + " for " + enemyShip.counter + " damage!");
+            eventLog(events);
+        }
+        updateUI();
+    })
 }
