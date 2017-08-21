@@ -76,6 +76,7 @@ var ships = {
 };
 
 shipsSunk = [];
+fireCount = 0;
 
 $('#start').click(function (event) {
     $('body').empty();
@@ -217,22 +218,31 @@ function gameRun (myShip, enemyShip) {
         function attack () {
             if(checkHealth(myShip, enemyShip, false, true) && !myShip.sunk)
             {
-                enemyShip.health -= myShip.attack;
-                myShip.attack += myShip.increment;
-                events = [];
-                events.push(myShip.name + ' attacked ' + enemyShip.name + ' for ' + myShip.attack + ' damage!');
-                eventLog(events);
-                counter();
+                setTimeout(function() {
+                    myShip.attack += myShip.increment;
+                    enemyShip.health -= myShip.attack;
+                    events = [];
+                    events.push(myShip.name + ' attacked ' + enemyShip.name + ' for ' + myShip.attack + ' damage!');
+                    eventLog(events);
+                    counter();
+                    updateUI();
+
+                }, 500);
+
+                fireball(myShip);
             }
         }
         function counter () {
             if(checkHealth(myShip, enemyShip, true, false))
             {
-                myShip.health -= enemyShip.counter;
-                events = [];
-                events.push(enemyShip.name + ' counter-attacked ' + myShip.name + ' for ' + enemyShip.counter + ' damage!');
-                eventLog(events);
-                updateUI();
+                setTimeout(function() {
+                    myShip.health -= enemyShip.counter;
+                    events = [];
+                    events.push(enemyShip.name + ' counter-attacked ' + myShip.name + ' for ' + enemyShip.counter + ' damage!');
+                    eventLog(events);
+                    updateUI();
+                }, 1500);
+                setTimeout(function() { fireball(enemyShip); }, 1000);
             }
         }
         attack();
@@ -265,6 +275,40 @@ function gameRun (myShip, enemyShip) {
             else if(enemyShip.health - myShip.attack+myShip.increment > 0)
             {
                 return true;
+            }
+        }
+    }
+
+    function fireball(from)
+    {
+        fireCount++;
+
+        if(from.selected)
+        {
+            for(let e = 0; e < fireCount; e++)
+            {
+                $('#ship'+from.id).append("<div class='explosion' id='explosion"+e+"'></div>");
+                $('#explosion'+e).html("<img src='assets/img/explosion1.png'/>");
+                $('#explosion'+e).delay(300).hide('fast');
+
+                $('#ship'+from.id).append("<div class='cannonball' id='cannonball"+e+"'></div>");
+                $('#cannonball'+e).html("<img src='assets/img/cannonBall.png'/>");
+                $("#cannonball"+e).animate({left: "+=200"}, 500);
+                $("#cannonball"+e).delay(50).hide('fast');
+            }
+        }
+        else
+        {
+            for(let e = 0; e < fireCount; e++)
+            {
+                $('#ship'+from.id).append("<div class='explosionC' id='explosionC"+e+"'></div>");
+                $('#explosionC'+e).html("<img src='assets/img/explosion1.png'/>");
+                $('#explosionC'+e).delay(300).hide('fast');
+
+                $('#ship'+from.id).append("<div class='cannonballC' id='cannonballC"+e+"'></div>");
+                $('#cannonballC'+e).html("<img src='assets/img/cannonBall.png'/>");
+                $("#cannonballC"+e).animate({left: "-=200"}, 500);
+                $("#cannonballC"+e).delay(50).hide('fast');
             }
         }
     }
