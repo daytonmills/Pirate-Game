@@ -30,7 +30,7 @@ var ships = {
         sunk: false,
         health: 150,
         attack: 10,
-        counter: 10,
+        counter: 50,
         increment: 10,
         sprites: {
             '99': 'assets/img/ships/ship2/99.png',
@@ -75,6 +75,8 @@ var ships = {
     }
 };
 
+shipsSunk = [];
+
 $('body').prepend("<div class='container game'></div>");
 shipSelect(false, false);
 
@@ -91,7 +93,17 @@ function shipSelect(reShip, enemySelected, reselect)
             "<p class='ship-name'>" + ships[ship].name + "</p><img class='ship-img' src='" + ships[ship].sprites[99] + "'/>" +
             "<p class='ship-health'>" + ships[ship].health + '</p></div>');
         }
-    };
+        else if(ships[ship].sunk)
+        {
+            for(let s = 0; s < shipsSunk.length; s++)
+            {
+                if(s === 2)
+                {
+                    console.log("all ships sunk!");
+                }
+            }
+        }
+    }
 
     var selected = {
         mine: reShip.selected,
@@ -158,42 +170,71 @@ function gameRun (myShip, enemyShip) {
         }
     }
 
-    function updateUI () {
+    function updateUI (stats, check) {
         for (let s = 0; s < fleet.length; s++) {
             $('.stats-' + fleet[s].id).html('<p>Name: ' + fleet[s].name + '</p><p>Health: ' + fleet[s].health + '</p>');
             $('#ship' + fleet[s].id + ' > .ship-health').html(fleet[s].health);
-        }
-        if(enemyShip.health <= 0)
-        {
-            enemyShip.sunk = true;
-            enemyShip.enemy = false;
-            //myShip, enemyShipisSelected, reselect
-            shipSelect(myShip, false, true);
-        }
-        else if(myShip.health <= 0)
-        {
-            myShip.sunk = true;
-            //Game Over code
         }
     }
 
     $('#attack').click(function (event) {
         function attack () {
-            enemyShip.health -= myShip.attack;
-            myShip.attack += myShip.increment;
-            events = [];
-            events.push(myShip.name + ' attacked ' + enemyShip.name + ' for ' + myShip.attack + ' damage!');
-            eventLog(events);
-            counter();
-            updateUI();
+            if(checkHealth(myShip, enemyShip, false, true) && !myShip.sunk)
+            {
+                enemyShip.health -= myShip.attack;
+                myShip.attack += myShip.increment;
+                events = [];
+                events.push(myShip.name + ' attacked ' + enemyShip.name + ' for ' + myShip.attack + ' damage!');
+                eventLog(events);
+                counter();
+            }
         }
         function counter () {
-            myShip.health -= enemyShip.counter;
-            events = [];
-            events.push(enemyShip.name + ' counter-attacked ' + myShip.name + ' for ' + enemyShip.counter + ' damage!');
-            eventLog(events);
-            updateUI();
+            if(checkHealth(myShip, enemyShip, true, false))
+            {
+                myShip.health -= enemyShip.counter;
+                events = [];
+                events.push(enemyShip.name + ' counter-attacked ' + myShip.name + ' for ' + enemyShip.counter + ' damage!');
+                eventLog(events);
+                updateUI();
+            }
         }
         attack();
     });
+
+    function checkHealth(myShip, enemyShip, checkM, checkE)
+    {
+        if(checkM)
+        {
+            if(myShip.health - enemyShip.counter <= 0)
+            {
+                myShip.sunk = true;
+                console.log("u ded kek");
+                //Game Over code
+            }
+            else if(myShip.health - enemyShip.counter > 0)
+            {
+                //ship is alive
+                return true;
+            }
+        }
+        else if(checkE)
+        {
+            //Fancy Predictive attack power :o
+            //If enemy health will still be greater than 0 after next attack (attack+increment)
+            if(enemyShip.health - myShip.attack+myShip.increment <= 0)
+            {
+                enemyShip.sunk = true;
+                enemyShip.enemy = false;
+                shipsSunk.push(enemyShip);
+                //myShip, enemyShipisSelected, reselect
+                shipSelect(myShip, false, true);
+            }
+            else if(enemyShip.health - myShip.attack+myShip.increment > 0)
+            {
+                //Ship is alive
+                return true;
+            }
+        }
+    }
 }
