@@ -11,10 +11,10 @@ var ships = {
         selected: false,
         enemy: false,
         sunk: false,
-        health: 180,
-        attack: 10,
-        counter: 10,
-        increment: 10,
+        health: 200,
+        attack: 5,
+        counter: 5,
+        increment: 5,
         sprites: {
             '99': 'assets/img/ships/ship1/99.png',
             '66': 'assets/img/ships/ship1/66.png',
@@ -29,9 +29,9 @@ var ships = {
         enemy: false,
         sunk: false,
         health: 150,
-        attack: 10,
-        counter: 50,
-        increment: 10,
+        attack: 6,
+        counter: 10,
+        increment: 6,
         sprites: {
             '99': 'assets/img/ships/ship2/99.png',
             '66': 'assets/img/ships/ship2/66.png',
@@ -46,9 +46,9 @@ var ships = {
         enemy: false,
         sunk: false,
         health: 120,
-        attack: 10,
-        counter: 10,
-        increment: 10,
+        attack: 8,
+        counter: 15,
+        increment: 8,
         sprites: {
             '99': 'assets/img/ships/ship3/99.png',
             '66': 'assets/img/ships/ship3/66.png',
@@ -64,7 +64,7 @@ var ships = {
         sunk: false,
         health: 100,
         attack: 10,
-        counter: 10,
+        counter: 25,
         increment: 10,
         sprites: {
             '99': 'assets/img/ships/ship4/99.png',
@@ -158,7 +158,7 @@ function gameRun (myShip, enemyShip) {
 
         for(let s = 0; s < fleet.length; s++) {
             $('.shipsArena').append("<div class='col-lg-4 ship' id='ship" + fleet[s].id + "'>" +
-            "<p class='ship-name'>" + fleet[s].name + "</p><img class='ship-img' src='" + fleet[s].sprites[99] + "'/>" +
+            "<p class='ship-name'>" + fleet[s].name + "</p><img class='ship"+fleet[s].id+"-img' src='" + fleet[s].sprites[99] + "'/>" +
             "<p class='ship-health'>" + fleet[s].health + '</p></div>');
         }
         updateUI();
@@ -170,10 +170,27 @@ function gameRun (myShip, enemyShip) {
         }
     }
 
-    function updateUI (stats, check) {
+    function updateUI () {
         for (let s = 0; s < fleet.length; s++) {
             $('.stats-' + fleet[s].id).html('<p>Name: ' + fleet[s].name + '</p><p>Health: ' + fleet[s].health + '</p>');
             $('#ship' + fleet[s].id + ' > .ship-health').html(fleet[s].health);
+
+            if(fleet[s].health >= 99)
+            {
+                $('.ship' + fleet[s].id + '-img').attr("src", fleet[s].sprites[99]);
+            }
+            if(fleet[s].health < 99 && fleet[s].health > 66)
+            {
+                $('.ship' + fleet[s].id + '-img').attr("src", fleet[s].sprites[66]);
+            }
+            if(fleet[s].health <= 66 && fleet[s].health > 33)
+            {
+                $('.ship' + fleet[s].id + '-img').attr("src", fleet[s].sprites[33]);
+            }
+            if(fleet[s].health <= 33)
+            {
+                $('.ship' + fleet[s].id + '-img').attr("src", fleet[s].sprites[0]);
+            }
         }
     }
 
@@ -220,7 +237,6 @@ function gameRun (myShip, enemyShip) {
         }
         else if(checkE)
         {
-            //Fancy Predictive attack power :o
             //If enemy health will still be greater than 0 after next attack (attack+increment)
             if(enemyShip.health - myShip.attack+myShip.increment <= 0)
             {
