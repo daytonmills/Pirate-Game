@@ -29,7 +29,7 @@
     "jquery/no-global-eval": 2,
     "jquery/no-has": 2,
     "jquery/no-hide": 2,
-    "jquery/no-html": 2,
+    "jquery/no-html": 0,
     "jquery/no-in-array": 2,
     "jquery/no-is": 2,
     "jquery/no-load": 2,
