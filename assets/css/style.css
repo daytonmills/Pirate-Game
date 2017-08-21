@@ -1,4 +1,10 @@
-/* Ship Styles */
+/* Override Bootstrap */
+.container-fluid
+{
+    padding: 0;
+}
+
+/* Selection Styles */
 .selected
 {
     border: solid 1px green;
@@ -9,8 +15,46 @@
     border: solid 1px red;
 }
 
+
+/* Attack Arena */
+.gameUI
+{
+    background-color: #ffe7cd;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+}
+
+#attack
+{
+    padding: .5rem 1rem;
+    font-size: 1.25rem;
+    line-height: 2;
+    width: 75%;
+    border-radius: 0;
+    background-color: #c5a585;
+}
+
+.eventUI
+{
+    background-color: #D4B392;
+}
+
 .eventLog
 {
     height: 50px;
+    padding-top: 15px;
     overflow-y:scroll;
+}
+
+.arena-bg
+{
+    background-image: url('../img/water.gif');
+    background-size: 48px;
+}
+
+.shipsArena
+{
+    margin: 0 auto;
+    padding-left: 35%;
 }

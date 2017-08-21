@@ -79,14 +79,14 @@ shipsSunk = [];
 
 $('#start').click(function (event) {
     $('body').empty();
-    $('body').prepend("<div class='container game'></div>");
+    $('body').prepend("<div class='container-fluid game'></div>");
     shipSelect(false, false);
 });
 
 function shipSelect(reShip, enemySelected, reselect)
 {
     $('.game').empty();
-    $('.game').append("<div class='fleet'><div class='row'><h2>Select Ship: </h2>" +
+    $('.game').append("<div class='container fleet'><div class='row'><h2>Select Ship: </h2>" +
     "</div><div class='row shipsFleet'></div></div>");
 
     for (var ship in ships) {
@@ -165,14 +165,14 @@ function gameRun (myShip, enemyShip) {
     setBattlefield();
 
     function setBattlefield () {
-        // Load Arena State
         $('.fleet').empty();
-        $('.game').append("<div class='arena'><div class='row'><h2>Arena: </h2>" +
+        $('body').addClass('arena-bg');
+        $('.game').append("<div class='container arena'><div class='row'><h2>Arena: </h2>" +
         "</div><div class='row shipsArena'></div></div>");
         $('.game').prepend("<div class='gameUI'><div class='row'><div class='col-lg-4'>" +
         "<div class='stats-" + myShip.id + "'></div></div><div class='col-lg-4'><h1>Pirate Battle</h1></div>" +
         "<div class='col-lg-4'><div class='stats-" + enemyShip.id + "'></div></div></div>" +
-        "<div class='row'><div class='col-lg-4'><button class='btn btn-sm btn-outline-danger' id='attack'>Attack</button>" +
+        "<div class='row eventUI'><div class='col-lg-4'><button class='btn btn-lg' id='attack'>Attack</button>" +
         "</div><div class='col-lg-8'><div class='eventLog'></div></div></div></div>");
 
         for(let s = 0; s < fleet.length; s++) {
@@ -250,24 +250,20 @@ function gameRun (myShip, enemyShip) {
             }
             else if(myShip.health - enemyShip.counter > 0)
             {
-                //ship is alive
                 return true;
             }
         }
         else if(checkE)
         {
-            //If enemy health will still be greater than 0 after next attack (attack+increment)
             if(enemyShip.health - myShip.attack+myShip.increment <= 0)
             {
                 enemyShip.sunk = true;
                 enemyShip.enemy = false;
                 shipsSunk.push(enemyShip);
-                //myShip, enemyShipisSelected, reselect
                 shipSelect(myShip, false, true);
             }
             else if(enemyShip.health - myShip.attack+myShip.increment > 0)
             {
-                //Ship is alive
                 return true;
             }
         }
