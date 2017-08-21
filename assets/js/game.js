@@ -77,8 +77,11 @@ var ships = {
 
 shipsSunk = [];
 
-$('body').prepend("<div class='container game'></div>");
-shipSelect(false, false);
+$('#start').click(function (event) {
+    $('body').empty();
+    $('body').prepend("<div class='container game'></div>");
+    shipSelect(false, false);
+});
 
 function shipSelect(reShip, enemySelected, reselect)
 {
@@ -89,9 +92,25 @@ function shipSelect(reShip, enemySelected, reselect)
     for (var ship in ships) {
         if(!ships[ship].sunk)
         {
-            $('.shipsFleet').append("<div class='col-lg-3 ship' id='ship" + ships[ship].id + "'>" +
-            "<p class='ship-name'>" + ships[ship].name + "</p><img class='ship-img' src='" + ships[ship].sprites[99] + "'/>" +
-            "<p class='ship-health'>" + ships[ship].health + '</p></div>');
+            if(!reselect)
+            {
+                $('.shipsFleet').append("<div class='col-lg-3 ship' id='ship" + ships[ship].id + "'>" +
+                "<p class='ship-name'>" + ships[ship].name +
+                "</p><img class='ship-img' src='" + ships[ship].sprites[99] + "'/>" +
+                "<div class='ship-info'><ul><li id='ship-health'><i class='fa fa-heart' aria-hidden='true'></i> Health: " + ships[ship].health + "</li>"+
+                "<li id='ship-attack'><i class='fa fa-bomb' aria-hidden='true'></i> Attack: " + ships[ship].attack +
+                "</li><li id='ship-increase'><i class='fa fa-plus-circle' aria-hidden='true'></i> Increment: " + ships[ship].increment +
+                "</li><li id='ship-counter'><i class='fa fa-shield' aria-hidden='true'></i> Defense: " + ships[ship].counter + "</li></div>");
+            }
+            else if(reselect && !ships[ship].selected){
+                $('.shipsFleet').append("<div class='col-lg-3 ship' id='ship" + ships[ship].id + "'>" +
+                "<p class='ship-name'>" + ships[ship].name +
+                "</p><img class='ship-img' src='" + ships[ship].sprites[99] + "'/>" +
+                "<div class='ship-info'><ul><li id='ship-health'><i class='fa fa-heart' aria-hidden='true'></i> Health: " + ships[ship].health + "</li>"+
+                "<li id='ship-attack'><i class='fa fa-bomb' aria-hidden='true'></i> Attack: " + ships[ship].attack +
+                "</li><li id='ship-increase'><i class='fa fa-plus-circle' aria-hidden='true'></i> Increment: " + ships[ship].increment +
+                "</li><li id='ship-counter'><i class='fa fa-shield' aria-hidden='true'></i> Defense: " + ships[ship].counter + "</li></div>");
+            }
         }
         else if(ships[ship].sunk)
         {
