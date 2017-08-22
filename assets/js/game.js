@@ -285,7 +285,7 @@ function gameRun (myShip, enemyShip) {
                 enemyShip.sunk = true;
                 enemyShip.enemy = false;
                 shipsSunk.push(enemyShip);
-                shipSelect(myShip, false, true);
+                shipVictory(myShip, enemyShip);
             }
             else if(enemyShip.health - myShip.attack+myShip.increment > 0)
             {
@@ -326,5 +326,20 @@ function gameRun (myShip, enemyShip) {
                 $("#cannonballC"+e).delay(50).hide('fast');
             }
         }
+    }
+
+    function shipVictory(myShip, enemyShip)
+    {
+        $('body').empty();
+        $('body').html("<div class='container'><div class='row'><div class='col-lg-12'>"+
+        "<h1>You are victorious!</h1></div></div><div class='row'><div class='col-lg-12'>"+
+        "<button class='btn btn-lg btn-outline-danger' id='continue'>Continue</button></div></div></div>");
+
+        $('#continue').click(function (event)
+        {
+            $('body').empty();
+            $('body').prepend("<div class='container-fluid game'></div>");
+            shipSelect(myShip, false, true);
+        });
     }
 }
