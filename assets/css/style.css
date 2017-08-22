@@ -1,4 +1,24 @@
 /* Override Bootstrap */
+body{
+    background-image: url(../img/ship.jpg);
+    background-size: auto;
+    background-blend-mode: luminosity;
+}
+
+.dialog
+{
+    background-color: #ffe7cd;
+    border: dotted 1.5px red;
+    text-align: center;
+    width: 600px;
+    padding: 25px;
+    margin-top: 15%;
+}
+h1
+{
+    font-family: 'Trade Winds', cursive;
+}
+
 .container-fluid
 {
     padding: 0;
@@ -7,13 +27,9 @@
 /* Selection Styles */
 .selected
 {
-    border: solid 1px green;
+    border: solid 2px green;
 }
 
-.enemy
-{
-    border: solid 1px red;
-}
 .ship
 {
     background-image: url(../img/parchment.png);
@@ -58,6 +74,11 @@
     text-align: center;
 }
 
+.gameUI h1
+{
+    margin-top: 15px;
+}
+
 #attack
 {
     padding: .5rem 1rem;
@@ -85,6 +106,7 @@
 .arena-bg
 {
     background-image: url('../img/water.gif');
+    background-blend-mode: normal;
     background-size: 48px;
 }
 

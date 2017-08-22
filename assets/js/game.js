@@ -14,7 +14,7 @@ var ships = {
         health: 200,
         attack: 5,
         counter: 5,
-        increment: 5,
+        increment: 50,
         sprites: {
             '99': 'assets/img/ships/ship1/99.png',
             '66': 'assets/img/ships/ship1/66.png',
@@ -122,7 +122,7 @@ function shipSelect(reShip, enemySelected, reselect)
             {
                 if(s === 2)
                 {
-                    console.log("all ships sunk!");
+                    gameWin();
                 }
             }
         }
@@ -270,8 +270,7 @@ function gameRun (myShip, enemyShip) {
             if(myShip.health - enemyShip.counter <= 0)
             {
                 myShip.sunk = true;
-                console.log("u ded kek");
-                //Game Over code
+                gameOver();
             }
             else if(myShip.health - enemyShip.counter > 0)
             {
@@ -331,9 +330,10 @@ function gameRun (myShip, enemyShip) {
     function shipVictory(myShip, enemyShip)
     {
         $('body').empty();
-        $('body').html("<div class='container'><div class='row'><div class='col-lg-12'>"+
+        $('body').removeClass("arena-bg");
+        $('body').html("<div class='container dialog'><div class='row'><div class='col-lg-12'>"+
         "<h1>You are victorious!</h1></div></div><div class='row'><div class='col-lg-12'>"+
-        "<button class='btn btn-lg btn-outline-danger' id='continue'>Continue</button></div></div></div>");
+        "<p>But the battle is not over...</p><button class='btn btn-lg btn-outline-danger' id='continue'>Continue</button></div></div></div>");
 
         $('#continue').click(function (event)
         {
@@ -342,4 +342,21 @@ function gameRun (myShip, enemyShip) {
             shipSelect(myShip, false, true);
         });
     }
+}
+
+function gameOver()
+{
+    $('body').empty();
+    $('body').html("<div class='container dialog'><div class='row'><div class='col-lg-12'>"+
+    "<h1>You are dead!</h1></div></div><div class='row'><div class='col-lg-12'>"+
+    "<p>Refresh to Restart!</p></div></div></div>");
+
+}
+
+function gameWin()
+{
+    $('body').empty();
+    $('body').html("<div class='container dialog'><div class='row'><div class='col-lg-12'>"+
+    "<h1>Just Kidding, You won!</h1></div></div><div class='row'><div class='col-lg-12'>"+
+    "<p>Thanks for playing. Refresh to Restart!</p></div></div></div>");
 }
