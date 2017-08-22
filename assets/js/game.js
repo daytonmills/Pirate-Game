@@ -14,7 +14,7 @@ var ships = {
         health: 200,
         attack: 5,
         counter: 5,
-        increment: 50,
+        increment: 5,
         sprites: {
             '99': 'assets/img/ships/ship1/99.png',
             '66': 'assets/img/ships/ship1/66.png',
@@ -88,7 +88,7 @@ $('#start').click(function (event)
 function shipSelect(reShip, enemySelected, reselect)
 {
     $('.game').empty();
-    $('.game').append("<div class='container fleet'><div class='row'><h2>Select Ship: </h2>" +
+    $('.game').append("<div class='container fleet'><div class='row'><h2 id='selectTitle'>Select Your Ship: </h2>" +
     "</div><div class='row shipsFleet'></div></div>");
 
     for (var ship in ships)
@@ -98,9 +98,9 @@ function shipSelect(reShip, enemySelected, reselect)
             if(!reselect)
             {
                 $('.shipsFleet').append("<div class='col-lg-3 ship' id='ship" + ships[ship].id + "'>" +
-                "<p class='ship-name'>" + ships[ship].name +
-                "</p><img class='ship-img' src='" + ships[ship].sprites[99] + "'/>" +
-                "<div class='ship-info'><ul><li id='ship-health'><i class='fa fa-heart' aria-hidden='true'></i> Health: " + ships[ship].health + "</li>"+
+                "<p class='ship-name' id='ship" + ships[ship].id + "'>" + ships[ship].name +
+                "</p><img id='ship" + ships[ship].id + "' class='ship-img' src='" + ships[ship].sprites[99] + "'/>" +
+                "<div id='ship" + ships[ship].id + "' class='ship-info'><ul><li id='ship-health'><i class='fa fa-heart' aria-hidden='true'></i> Health: " + ships[ship].health + "</li>"+
                 "<li id='ship-attack'><i class='fa fa-bomb' aria-hidden='true'></i> Attack: " + ships[ship].attack +
                 "</li><li id='ship-increase'><i class='fa fa-plus-circle' aria-hidden='true'></i> Increment: " + ships[ship].increment +
                 "</li><li id='ship-counter'><i class='fa fa-shield' aria-hidden='true'></i> Defense: " + ships[ship].counter + "</li></div>");
@@ -108,9 +108,9 @@ function shipSelect(reShip, enemySelected, reselect)
             else if(reselect && !ships[ship].selected)
             {
                 $('.shipsFleet').append("<div class='col-lg-3 ship' id='ship" + ships[ship].id + "'>" +
-                "<p class='ship-name'>" + ships[ship].name +
-                "</p><img class='ship-img' src='" + ships[ship].sprites[99] + "'/>" +
-                "<div class='ship-info'><ul><li id='ship-health'><i class='fa fa-heart' aria-hidden='true'></i> Health: " + ships[ship].health + "</li>"+
+                "<p class='ship-name' id='ship" + ships[ship].id + "'>" + ships[ship].name +
+                "</p><img id='ship" + ships[ship].id + "' class='ship-img' src='" + ships[ship].sprites[99] + "'/>" +
+                "<div id='ship" + ships[ship].id + "' class='ship-info'><ul><li id='ship-health'><i class='fa fa-heart' aria-hidden='true'></i> Health: " + ships[ship].health + "</li>"+
                 "<li id='ship-attack'><i class='fa fa-bomb' aria-hidden='true'></i> Attack: " + ships[ship].attack +
                 "</li><li id='ship-increase'><i class='fa fa-plus-circle' aria-hidden='true'></i> Increment: " + ships[ship].increment +
                 "</li><li id='ship-counter'><i class='fa fa-shield' aria-hidden='true'></i> Defense: " + ships[ship].counter + "</li></div>");
@@ -134,7 +134,7 @@ function shipSelect(reShip, enemySelected, reselect)
         enemy: enemySelected
     };
 
-    $('.ship').click(function (event)
+    $('.ship,.ship-name,.ship-img,.ship-info').click(function (event)
     {
         if (!selected.mine && !reselect)
         {
@@ -154,7 +154,8 @@ function shipSelect(reShip, enemySelected, reselect)
 
     function selectEnemy (myShip)
     {
-        $('.ship').click(function (event)
+        $('#selectTitle').text("Select Enemy Ship: ");
+        $('.ship,.ship-name,.ship-img,.ship-info').click(function (event)
         {
             if (!selected.enemy && ships[event.target.id] !== myShip && !ships[event.target.id].sunk) {
                 var enemyShip = ships[event.target.id];
@@ -356,6 +357,8 @@ function gameOver()
     $('body').html("<div class='container dialog'><div class='row'><div class='col-lg-12'>"+
     "<h1>You are dead!</h1></div></div><div class='row'><div class='col-lg-12'>"+
     "<p>Refresh to Restart!</p></div></div></div>");
+    $('body').prepend("<audio id='crash'><source src='assets/mp3/crash.wav' type='audio/wav'></audio>");
+    document.getElementById('crash').play();
 
 }
 
