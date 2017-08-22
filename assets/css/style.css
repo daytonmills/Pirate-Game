@@ -14,9 +14,41 @@
 {
     border: solid 1px red;
 }
+.ship
+{
+    background-image: url(../img/parchment.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    max-width: 275px;
+    margin-right: 10px;
+    text-align: center;
+}
 
+.ship-name
+{
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 0;
+    margin-top: 15px;
+}
+.ship-img
+{
+    margin-left: 15px;
+    padding-bottom: 25px;
+    float: left;
+}
+.ship-info
+{
+    margin-top: 10px;
+    margin-left: 69px;
+    text-align: left;
+}
+.ship-info ul
+{
+    list-style-type: none;
+}
 
-/* Attack Arena */
+/* Game UI */
 .gameUI
 {
     background-color: #ffe7cd;
@@ -45,8 +77,10 @@
     height: 50px;
     padding-top: 15px;
     overflow-y:scroll;
+    text-align: left;
 }
 
+/* Arena Styles */
 .arena-bg
 {
     background-image: url('../img/water.gif');

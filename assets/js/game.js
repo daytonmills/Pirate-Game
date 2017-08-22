@@ -177,9 +177,9 @@ function gameRun (myShip, enemyShip) {
         "</div><div class='col-lg-8'><div class='eventLog'></div></div></div></div>");
 
         for(let s = 0; s < fleet.length; s++) {
-            $('.shipsArena').append("<div class='col-lg-4 ship' id='ship" + fleet[s].id + "'>" +
-            "<p class='ship-name'>" + fleet[s].name + "</p><img class='ship"+fleet[s].id+"-img' src='" + fleet[s].sprites[99] + "'/>" +
-            "<p class='ship-health'>" + fleet[s].health + '</p></div>');
+            $('.shipsArena').append("<div class='col-lg-4 shipB' id='ship" + fleet[s].id + "'>" +
+            "<p class='shipB-name'>" + fleet[s].name + "</p><img class='ship"+fleet[s].id+"-img' src='" + fleet[s].sprites[99] + "'/>" +
+            "<p class='shipB-health'>" + fleet[s].health + '</p></div>');
         }
         updateUI();
     }
