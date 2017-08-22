@@ -39,7 +39,7 @@
     "jquery/no-parent": 2,
     "jquery/no-parents": 2,
     "jquery/no-parse-html": 2,
-    "jquery/no-prop": 2,
+    "jquery/no-prop": 0,
     "jquery/no-proxy": 2,
     "jquery/no-ready": 2,
     "jquery/no-serialize": 2,

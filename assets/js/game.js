@@ -78,7 +78,8 @@ var ships = {
 shipsSunk = [];
 fireCount = 0;
 
-$('#start').click(function (event) {
+$('#start').click(function (event)
+{
     $('body').empty();
     $('body').prepend("<div class='container-fluid game'></div>");
     shipSelect(false, false);
@@ -90,7 +91,8 @@ function shipSelect(reShip, enemySelected, reselect)
     $('.game').append("<div class='container fleet'><div class='row'><h2>Select Ship: </h2>" +
     "</div><div class='row shipsFleet'></div></div>");
 
-    for (var ship in ships) {
+    for (var ship in ships)
+    {
         if(!ships[ship].sunk)
         {
             if(!reselect)
@@ -103,7 +105,8 @@ function shipSelect(reShip, enemySelected, reselect)
                 "</li><li id='ship-increase'><i class='fa fa-plus-circle' aria-hidden='true'></i> Increment: " + ships[ship].increment +
                 "</li><li id='ship-counter'><i class='fa fa-shield' aria-hidden='true'></i> Defense: " + ships[ship].counter + "</li></div>");
             }
-            else if(reselect && !ships[ship].selected){
+            else if(reselect && !ships[ship].selected)
+            {
                 $('.shipsFleet').append("<div class='col-lg-3 ship' id='ship" + ships[ship].id + "'>" +
                 "<p class='ship-name'>" + ships[ship].name +
                 "</p><img class='ship-img' src='" + ships[ship].sprites[99] + "'/>" +
@@ -125,12 +128,14 @@ function shipSelect(reShip, enemySelected, reselect)
         }
     }
 
-    var selected = {
+    var selected =
+    {
         mine: reShip.selected,
         enemy: enemySelected
     };
 
-    $('.ship').click(function (event) {
+    $('.ship').click(function (event)
+    {
         if (!selected.mine && !reselect)
         {
             const myShip = ships[event.target.id];
@@ -147,8 +152,10 @@ function shipSelect(reShip, enemySelected, reselect)
         selectEnemy(reShip);
     }
 
-    function selectEnemy (myShip) {
-        $('.ship').click(function (event) {
+    function selectEnemy (myShip)
+    {
+        $('.ship').click(function (event)
+        {
             if (!selected.enemy && ships[event.target.id] !== myShip && !ships[event.target.id].sunk) {
                 var enemyShip = ships[event.target.id];
                 enemyShip.enemy = true;
@@ -165,10 +172,11 @@ function gameRun (myShip, enemyShip) {
     var events = [];
     setBattlefield();
 
-    function setBattlefield () {
+    function setBattlefield ()
+    {
         $('.fleet').empty();
         $('body').addClass('arena-bg');
-        $('.game').append("<div class='container arena'><div class='row'><h2>Arena: </h2>" +
+        $('.game').append("<div class='container arena'><div class='row'>" +
         "</div><div class='row shipsArena'></div></div>");
         $('.game').prepend("<div class='gameUI'><div class='row'><div class='col-lg-4'>" +
         "<div class='stats-" + myShip.id + "'></div></div><div class='col-lg-4'><h1>Pirate Battle</h1></div>" +
@@ -176,24 +184,25 @@ function gameRun (myShip, enemyShip) {
         "<div class='row eventUI'><div class='col-lg-4'><button class='btn btn-lg' id='attack'>Attack</button>" +
         "</div><div class='col-lg-8'><div class='eventLog'></div></div></div></div>");
 
-        for(let s = 0; s < fleet.length; s++) {
+        for(let s = 0; s < fleet.length; s++)
+        {
             $('.shipsArena').append("<div class='col-lg-4 shipB' id='ship" + fleet[s].id + "'>" +
-            "<p class='shipB-name'>" + fleet[s].name + "</p><img class='ship"+fleet[s].id+"-img' src='" + fleet[s].sprites[99] + "'/>" +
-            "<p class='shipB-health'>" + fleet[s].health + '</p></div>');
+            "<img class='ship"+fleet[s].id+"-img' src='" + fleet[s].sprites[99] + "'/></div>");
         }
         updateUI();
     }
 
-    function eventLog (events) {
+    function eventLog (events)
+    {
         for (let e = 0; e < events.length; e++) {
             $('.eventLog').prepend('<p>' + events[e] + '</p>');
         }
     }
 
-    function updateUI () {
+    function updateUI ()
+    {
         for (let s = 0; s < fleet.length; s++) {
             $('.stats-' + fleet[s].id).html('<p>Name: ' + fleet[s].name + '</p><p>Health: ' + fleet[s].health + '</p>');
-            $('#ship' + fleet[s].id + ' > .ship-health').html(fleet[s].health);
 
             if(fleet[s].health >= 99)
             {
@@ -214,11 +223,14 @@ function gameRun (myShip, enemyShip) {
         }
     }
 
-    $('#attack').click(function (event) {
-        function attack () {
+    $('#attack').click(function (event)
+    {
+        function attack ()
+        {
             if(checkHealth(myShip, enemyShip, false, true) && !myShip.sunk)
             {
-                setTimeout(function() {
+                setTimeout(function()
+                {
                     myShip.attack += myShip.increment;
                     enemyShip.health -= myShip.attack;
                     events = [];
@@ -228,19 +240,22 @@ function gameRun (myShip, enemyShip) {
                     updateUI();
 
                 }, 500);
-
+                $('#attack').prop("disabled",true);
                 fireball(myShip);
             }
         }
-        function counter () {
+        function counter ()
+        {
             if(checkHealth(myShip, enemyShip, true, false))
             {
-                setTimeout(function() {
+                setTimeout(function()
+                {
                     myShip.health -= enemyShip.counter;
                     events = [];
                     events.push(enemyShip.name + ' counter-attacked ' + myShip.name + ' for ' + enemyShip.counter + ' damage!');
                     eventLog(events);
                     updateUI();
+                    $('#attack').prop("disabled",false);
                 }, 1500);
                 setTimeout(function() { fireball(enemyShip); }, 1000);
             }
