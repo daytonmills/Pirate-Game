@@ -285,6 +285,8 @@ function gameRun (myShip, enemyShip) {
                 enemyShip.enemy = false;
                 shipsSunk.push(enemyShip);
                 shipVictory(myShip, enemyShip);
+                $('body').prepend("<audio id='crash'><source src='assets/mp3/crash.wav' type='audio/wav'></audio>");
+                document.getElementById('crash').play();
             }
             else if(enemyShip.health - myShip.attack+myShip.increment > 0)
             {
@@ -301,6 +303,8 @@ function gameRun (myShip, enemyShip) {
         {
             for(let e = 0; e < fireCount; e++)
             {
+                $('body').prepend("<audio id='cannon'><source src='assets/mp3/cannon.mp3' type='audio/mp3'></audio>");
+                document.getElementById('cannon').play();
                 $('#ship'+from.id).append("<div class='explosion' id='explosion"+e+"'></div>");
                 $('#explosion'+e).html("<img src='assets/img/explosion1.png'/>");
                 $('#explosion'+e).delay(300).hide('fast');
@@ -315,6 +319,8 @@ function gameRun (myShip, enemyShip) {
         {
             for(let e = 0; e < fireCount; e++)
             {
+                $('body').prepend("<audio id='cannon'><source src='assets/mp3/cannon.mp3' type='audio/mp3'></audio>");
+                document.getElementById('cannon').play();
                 $('#ship'+from.id).append("<div class='explosionC' id='explosionC"+e+"'></div>");
                 $('#explosionC'+e).html("<img src='assets/img/explosion1.png'/>");
                 $('#explosionC'+e).delay(300).hide('fast');
@@ -359,4 +365,6 @@ function gameWin()
     $('body').html("<div class='container dialog'><div class='row'><div class='col-lg-12'>"+
     "<h1>Just Kidding, You won!</h1></div></div><div class='row'><div class='col-lg-12'>"+
     "<p>Thanks for playing. Refresh to Restart!</p></div></div></div>");
+    $('body').prepend("<audio id='theme'><source src='assets/mp3/theme.mp3' type='audio/mp3'></audio>");
+    document.getElementById('theme').play();
 }
